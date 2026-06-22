@@ -43,3 +43,12 @@ sequenceDiagram
 3. **Ewaluacja Zewnętrzna:** LangGraph Server buduje wewnętrzny graf, uruchamia potężne modele (Llama 3.3, DeepSeek) via NVIDIA API i generuje końcowy, pewny output po ewaluacjach w pętli.
 4. **Zapis do Pamięci:** Zewnętrzny kontener ma podmontowany ten sam wolumen bazy wiedzy (Obsidian) co Hermes, by swobodnie wrzucać tam wytworzone artefakty.
 5. **Notyfikacja Zwrotna:** LangGraph informuje Hermesa o ukończeniu, a ten pinguje użytkownika na komunikatorze.
+
+## Dostępne Interfejsy LangGraph
+
+Ponieważ serwer LangGraph działa w trybie "headless" (w tle), dodaliśmy do niego dwie metody podglądu pracy "na żywo":
+
+1. **Mroczny Dashboard (FastAPI HTML)**
+   Natywny panel wbudowany w nasz kontener. Możesz go przeglądać pod adresem: `http://localhost:8001`. Służy do szybkiego podglądu na spływające od Hermesa webhooki.
+2. **LangGraph Studio (CLI)**
+   Oficjalne potężne środowisko LangChain do wizualizacji kroków i grafów. Wymaga wpisania komendy `npx @langchain/langgraph-cli dev` z poziomu katalogu serwera (terminal z tą komendą musi pozostać cały czas **otwarty i aktywny**). Po jej uruchomieniu, lokalny serwer wstanie na porcie `2024` i otworzy dedykowaną stronę w przeglądarce.

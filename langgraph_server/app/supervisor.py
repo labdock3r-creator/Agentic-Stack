@@ -28,7 +28,7 @@ class HermesSupervisor:
         self,
         provider: str = "openai",
         model_name: Optional[str] = None,
-        roles_dir: str = "src/hermes_langgraph/roles",
+        roles_dir: str = "app/roles",
         tavily_api_key: Optional[str] = None,
         use_hindsight: bool = True
     ):
@@ -144,3 +144,19 @@ class HermesSupervisor:
         )
 
         return result
+
+# --- LangGraph Studio Static Graph Export ---
+# Studio wymaga dostępu do statycznie wyeksponowanego grafu ("compiled graph").
+
+def _create_studio_graph():
+    try:
+        from .team_composer import TeamComposition
+        # Używamy zaktualizowanej ścieżki do ról
+        sv = HermesSupervisor(provider="nvidia", roles_dir="app/roles", use_hindsight=False)
+        comp = TeamComposition(selected_roles=["ARCHI", "FORGE"], reasoning="Studio Static View", max_iterations=2)
+        return sv.build_graph(comp)
+    except Exception as e:
+        print("Nie można zainicjować grafu dla Studio:", e)
+        return None
+
+graph = _create_studio_graph()

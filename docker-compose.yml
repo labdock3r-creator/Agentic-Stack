@@ -6,17 +6,17 @@ services:
       context: ./langgraph_server
     container_name: langgraph_factory
     ports:
-      - "8000:8000"
+      - "8001:8000"
     env_file:
       - .env
     volumes:
       # Mount Obsidian to allow saving markdown reports
       - type: bind
-        source: "C:/Users/Uzytkownik/Documents/Obsidian Vault"
+        source: /mnt/c/Users/Uzytkownik/Documents/Obsidian Vault
         target: /mnt/obsidian
       # Mount Hermes Kanban DB to allow LangGraph to report statuses back to Hermes UI
       - type: bind
-        source: "\\wsl$\\Ubuntu\\home\\r00t\\.hermes"
+        source: /home/r00t/.hermes
         target: /mnt/hermes
     restart: unless-stopped
     command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
