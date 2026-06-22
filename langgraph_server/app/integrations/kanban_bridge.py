@@ -29,7 +29,7 @@ class KanbanBridge:
             with sqlite3.connect(self.db_path) as conn:
                 conn.execute(
                     "INSERT INTO tasks (id, title, body, status, priority, created_at) VALUES (?, ?, ?, ?, ?, ?)",
-                    (task_id, title, description, "Backlog", priority, created_at)
+                    (task_id, title, description, "todo", priority, created_at)
                 )
             print(f"[Kanban] Task created in DB: {task_id}")
         except Exception as e:
@@ -39,9 +39,9 @@ class KanbanBridge:
     def update_status(self, task_id: str, phase: str, agent: str, notes: str = ""):
         # W prawdziwym Hermesie kolumna to status (np. 'In Progress', 'Done', 'Backlog') i assignee
         status_map = {
-            "Architektura (ARCHI)": "In Progress",
-            "Review (FORGE)": "In Progress",
-            "Zakończone (DONE)": "Done"
+            "Architektura (ARCHI)": "in_progress",
+            "Review (FORGE)": "in_progress",
+            "Zakończone (DONE)": "done"
         }
         status_val = status_map.get(phase, phase)
         
